@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text"/>
+		<button onclick="send()">发送</button>
+		<p></p>
+	</body>
+	<script src="../js/jquery-3.1.1.js"></script>
+	<script src="../js/socket.js"></script>
+	<script>
+		var socket = io('http://localhost:8989/');
+		var val = '';
+		function send(){
+			socket.emit('message',$('input').val())
+			$('input').val('').focus()
+		}
+		socket.on('backdata',function(data){
+			console.log(data);
+			val+=data+'<br/>'
+			$('p').html(val)
+		})
+	</script>
+</html>
